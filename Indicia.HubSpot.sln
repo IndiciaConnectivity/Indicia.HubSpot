@@ -1,0 +1,21 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Indicia.HubSpot", "Indicia.HubSpot\Indicia.HubSpot.csproj", "{ECD0D666-D44B-4A8C-ABB9-91B8F6037F0D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{42C8F7BC-6AD2-4711-ABA3-BE5F52E56B8B}"
+ProjectSection(SolutionItems) = preProject
+	README.md = README.md
+EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ECD0D666-D44B-4A8C-ABB9-91B8F6037F0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECD0D666-D44B-4A8C-ABB9-91B8F6037F0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECD0D666-D44B-4A8C-ABB9-91B8F6037F0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECD0D666-D44B-4A8C-ABB9-91B8F6037F0D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
