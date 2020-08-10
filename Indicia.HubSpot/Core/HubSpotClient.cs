@@ -20,8 +20,7 @@ namespace Indicia.HubSpot.Core
         private readonly ILogger _logger;
 
         private static string BaseUrl => "https://api.hubapi.com";
-        
-        public string BasePath { get => BaseUrl; }
+        private static string BasePath => BaseUrl;
 
         /// <summary>
         /// Creates a HubSpot client. 
