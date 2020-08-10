@@ -1,5 +1,7 @@
 ﻿# Indicia.HubSpot
 
+[![NuGet](https://img.shields.io/nuget/v/Indicia.HubSpot.svg)](https://www.nuget.org/packages/Indicia.HubSpot/)
+
 This package is heavily based on [HubSpot.NET](https://github.com/hubspot-net/HubSpot.NET), for which I really
 would like to thank David Clarke and Turner Bass for their great work on that package.
 
@@ -34,8 +36,7 @@ The Indicia.HubSpot client still needs a lot of work. Things that immediately po
 
 ## Getting started
 
-At the moment, you need to build the NuGet package yourself, or you can include the project in your
-own solution.
+To get started, install the [NuGet package](https://www.nuget.org/packages/Indicia.HubSpot/).
 
 After installation, you need to register the package's classes in your service provider, something like
 this:
