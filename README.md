@@ -26,13 +26,11 @@ However, this could very easily be extended with the other object API's (Line It
 
 The Indicia.HubSpot client still needs a lot of work. Things that immediately pop into mind:
 
-- Fix the batch Read, Create and Update implementations to include a response
 - OAuth support
 - Support for the other object API types (Line Item, Product, Ticket, Quote)
 - Support for the non-object API types (Properties, Pipelines, Engagements, ...)
 - Tests
 - Examples
-- Publish in NuGet repository
 
 
 ## Getting started
