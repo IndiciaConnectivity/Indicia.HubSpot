@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Flurl;
 using RestSharp;
 
 namespace Indicia.HubSpot.Core.Auth
@@ -24,7 +23,7 @@ namespace Indicia.HubSpot.Core.Auth
 
         public string AnonymizeUrl(string url)
         {
-            return url.RemoveQueryParam(ApiKeyName);
+            return url?.Replace(_apiKey, "****");
         }
     }
 }
