@@ -38,18 +38,26 @@ namespace Indicia.HubSpot.Core
             }
         }
 
-        public Task<TResponse> ExecuteAsync<TResponse>(string path, Method method = Method.GET, CancellationToken cancellationToken = default, IDictionary<string,string> queryParameters = null, bool notFoundReturnsNull = false)
-            where TResponse : new() 
-            => SendReceiveRequestAsync<TResponse>(path, method, queryParameters, notFoundReturnsNull, cancellationToken);
+        public Task<TResponse> ExecuteAsync<TResponse>(string path, Method method = Method.GET,
+            CancellationToken cancellationToken = default, IDictionary<string, string> queryParameters = null,
+            bool notFoundReturnsNull = false)
+            where TResponse : new()
+            => SendReceiveRequestAsync<TResponse>(path, method, queryParameters, notFoundReturnsNull,
+                cancellationToken);
 
-        public Task<TResponse> ExecuteAsync<TResponse, TRequest>(string absoluteUriPath, TRequest entity, Method method = Method.GET, CancellationToken cancellationToken = default, IDictionary<string,string> queryParameters = null, bool notFoundReturnsNull = false)
-            where TResponse : new() 
-            => SendReceiveRequestAsync<TResponse, TRequest>(absoluteUriPath, method, entity, queryParameters, notFoundReturnsNull, cancellationToken);
+        public Task<TResponse> ExecuteAsync<TResponse, TRequest>(string absoluteUriPath, TRequest entity,
+            Method method = Method.GET, CancellationToken cancellationToken = default,
+            IDictionary<string, string> queryParameters = null, bool notFoundReturnsNull = false)
+            where TResponse : new()
+            => SendReceiveRequestAsync<TResponse, TRequest>(absoluteUriPath, method, entity, queryParameters,
+                notFoundReturnsNull, cancellationToken);
 
-        public Task ExecuteOnlyAsync(string absoluteUriPath, Method method = Method.GET, CancellationToken cancellationToken = default, IDictionary<string,string> queryParameters = null) 
+        public Task ExecuteOnlyAsync(string absoluteUriPath, Method method = Method.GET,
+            CancellationToken cancellationToken = default, IDictionary<string, string> queryParameters = null)
             => SendOnlyRequestAsync(absoluteUriPath, method, queryParameters, cancellationToken);
 
-        public Task ExecuteOnlyAsync<TRequest>(string absoluteUriPath, TRequest entity, Method method = Method.GET, CancellationToken cancellationToken = default, IDictionary<string,string> queryParameters = null) 
+        public Task ExecuteOnlyAsync<TRequest>(string absoluteUriPath, TRequest entity, Method method = Method.GET,
+            CancellationToken cancellationToken = default, IDictionary<string, string> queryParameters = null)
             => SendOnlyRequestAsync(absoluteUriPath, method, entity, queryParameters, cancellationToken);
 
         /// <summary>
@@ -62,7 +70,9 @@ namespace Indicia.HubSpot.Core
         /// <param name="notFoundReturnsNull">Flag which can be used to return null for 404 (Not Found) responses (instead of throwing an exception).</param>
         /// <param name="cancellationToken"></param>
         /// <returns>An entity of type T returned from the request.</returns>
-        private async Task<TResponse> SendReceiveRequestAsync<TResponse>(string path, Method method, IDictionary<string,string> queryParameters = null, bool notFoundReturnsNull = false, CancellationToken cancellationToken = default)
+        private async Task<TResponse> SendReceiveRequestAsync<TResponse>(string path, Method method,
+            IDictionary<string, string> queryParameters = null, bool notFoundReturnsNull = false,
+            CancellationToken cancellationToken = default)
             where TResponse : new()
         {
             var request = await ConfigureRequestAuthenticationAsync(path, method, cancellationToken);
@@ -99,7 +109,10 @@ namespace Indicia.HubSpot.Core
         /// <param name="notFoundReturnsNull">Flag which can be used to return null for 404 (Not Found) responses (instead of throwing an exception).</param>
         /// <param name="cancellationToken"></param>
         /// <returns>An entity of type T returned from the request.</returns>
-        private async Task<TResponse> SendReceiveRequestAsync<TResponse, TRequest>(string path, Method method, TRequest entity, IDictionary<string,string> queryParameters = null, bool notFoundReturnsNull = false, CancellationToken cancellationToken = default) where TResponse: new()
+        private async Task<TResponse> SendReceiveRequestAsync<TResponse, TRequest>(string path, Method method,
+            TRequest entity, IDictionary<string, string> queryParameters = null, bool notFoundReturnsNull = false,
+            CancellationToken cancellationToken = default)
+            where TResponse : new()
         {
             var request = await ConfigureRequestAuthenticationAsync(path, method, cancellationToken);
             request.AddQueryParameters(queryParameters);
@@ -119,7 +132,7 @@ namespace Indicia.HubSpot.Core
                 {
                     return default;
                 }
-                
+
                 throw new HubSpotException("Error from HubSpot",
                     new HubSpotError(response.StatusCode, response.StatusDescription), response.Content);
             }
@@ -137,7 +150,8 @@ namespace Indicia.HubSpot.Core
         /// <param name="entity">The entity being sent to the endpoint.</param>
         /// <param name="queryParameters">The (optional) query parameters.</param>
         /// <param name="cancellationToken"></param>
-        private async Task SendOnlyRequestAsync<T>(string path, Method method, T entity, IDictionary<string,string> queryParameters = null, CancellationToken cancellationToken = default)
+        private async Task SendOnlyRequestAsync<T>(string path, Method method, T entity,
+            IDictionary<string, string> queryParameters = null, CancellationToken cancellationToken = default)
         {
             var request = await ConfigureRequestAuthenticationAsync(path, method, cancellationToken);
             request.AddQueryParameters(queryParameters);
@@ -152,7 +166,8 @@ namespace Indicia.HubSpot.Core
             LogResponse(response);
 
             if (!response.IsSuccessful)
-                throw new HubSpotException("Error from HubSpot", new HubSpotError(response.StatusCode, response.StatusDescription), response.Content);
+                throw new HubSpotException("Error from HubSpot",
+                    new HubSpotError(response.StatusCode, response.StatusDescription), response.Content);
         }
 
         /// <summary>
@@ -162,7 +177,8 @@ namespace Indicia.HubSpot.Core
         /// <param name="method">The REST method to use.</param>
         /// <param name="queryParameters">The (optional) query parameters.</param>
         /// <param name="cancellationToken"></param>
-        private async Task SendOnlyRequestAsync(string path, Method method, IDictionary<string,string> queryParameters = null, CancellationToken cancellationToken = default)
+        private async Task SendOnlyRequestAsync(string path, Method method,
+            IDictionary<string, string> queryParameters = null, CancellationToken cancellationToken = default)
         {
             var request = await ConfigureRequestAuthenticationAsync(path, method, cancellationToken);
             request.AddQueryParameters(queryParameters);
@@ -172,7 +188,8 @@ namespace Indicia.HubSpot.Core
             LogResponse(response);
 
             if (!response.IsSuccessful)
-                throw new HubSpotException("Error from HubSpot", new HubSpotError(response.StatusCode, response.StatusDescription), response.Content);
+                throw new HubSpotException("Error from HubSpot",
+                    new HubSpotError(response.StatusCode, response.StatusDescription), response.Content);
         }
 
         /// <summary>
@@ -180,13 +197,15 @@ namespace Indicia.HubSpot.Core
         /// </summary>
         /// <param name="path"></param>
         /// <param name="method"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        private async Task<RestRequest> ConfigureRequestAuthenticationAsync(string path, Method method, CancellationToken cancellationToken)
+        private async Task<RestRequest> ConfigureRequestAuthenticationAsync(string path, Method method,
+            CancellationToken cancellationToken)
         {
             var fullPath = $"{BasePath.TrimEnd('/')}/{path.Trim('/')}";
             var request = new RestRequest(fullPath, method, DataFormat.Json);
             await _options.Value.Auth.ConfigureAuthAsync(request, cancellationToken);
-            request.JsonSerializer = new NewtonsoftRestSharpSerializer();  
+            request.JsonSerializer = new NewtonsoftRestSharpSerializer();
             return request;
         }
 
@@ -195,15 +214,17 @@ namespace Indicia.HubSpot.Core
             return http =>
             {
                 var body = http.RequestBody;
-                _logger?.LogTrace("HubSpot {method} request to {resource}{body}", 
-                    request.Method, _options.Value.Auth.AnonymizeUrl(http.Url.ToString()), string.IsNullOrEmpty(body) ? string.Empty : $": {body}");
+                _logger?.LogTrace("HubSpot {method} request to {resource}{body}",
+                    request.Method, _options.Value.Auth.AnonymizeUrl(http.Url.ToString()),
+                    string.IsNullOrEmpty(body) ? string.Empty : $": {body}");
             };
         }
 
         private void LogResponse(IRestResponse response)
         {
             _logger?.LogDebug("HubSpot {method} request to {resource} resulted in {statusCode} {statusResponse}",
-                response.Request.Method, _options.Value.Auth.AnonymizeUrl(response.ResponseUri.ToString()), (int) response.StatusCode, response.StatusDescription);
+                response.Request.Method, _options.Value.Auth.AnonymizeUrl(response.ResponseUri.ToString()),
+                (int) response.StatusCode, response.StatusDescription);
         }
     }
 }
