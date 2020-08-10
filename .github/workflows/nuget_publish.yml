@@ -15,6 +15,6 @@ jobs:
       - uses: olegtarasov/get-tag@v2
         name: Set tag environment variable
       - name: pack Indicia.HubSpot
-        run: dotnet pack src/Indicia.HubSpot/Indicia.HubSpot.csproj --configuration Release -p:PackageVersion=${GIT_TAG_NAME}
+        run: dotnet pack Indicia.HubSpot/Indicia.HubSpot.csproj --configuration Release -p:PackageVersion=${GIT_TAG_NAME}
       - name: push to nuget
         run: dotnet nuget push **/*.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json --no-symbols true
