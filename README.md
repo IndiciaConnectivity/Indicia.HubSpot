@@ -1,6 +1,7 @@
 ﻿# Indicia.HubSpot
 
 [![NuGet](https://img.shields.io/nuget/v/Indicia.HubSpot.svg)](https://www.nuget.org/packages/Indicia.HubSpot/)
+![publish nuget](https://github.com/IndiciaConnectivity/Indicia.HubSpot/workflows/publish%20nuget/badge.svg)
 
 This package is heavily based on [HubSpot.NET](https://github.com/hubspot-net/HubSpot.NET), for which I really
 would like to thank David Clarke and Turner Bass for their great work on that package.
