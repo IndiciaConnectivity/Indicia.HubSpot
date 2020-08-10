@@ -33,7 +33,7 @@ namespace Indicia.HubSpot.Core
 
             if (_options.Value.Auth == null)
             {
-                throw new NotSupportedException($"The 'Auth' option is required.");
+                throw new NotSupportedException($"The '{nameof(_options.Value.Auth)}' option is required.");
             }
         }
 
