@@ -3,6 +3,7 @@ using Indicia.HubSpot.Api;
 using Indicia.HubSpot.Api.Companies;
 using Indicia.HubSpot.Api.Contacts;
 using Indicia.HubSpot.Api.Deals;
+using Indicia.HubSpot.Api.Tickets;
 using Indicia.HubSpot.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -24,6 +25,7 @@ namespace Indicia.HubSpot.Support
             services.TryAddSingleton<IHubSpotObjectApi<HubSpotCompanyObject>, HubSpotCompanyApi<HubSpotCompanyObject>>();
             services.TryAddSingleton<IHubSpotObjectApi<HubSpotContactObject>, HubSpotContactApi<HubSpotContactObject>>();
             services.TryAddSingleton<IHubSpotObjectApi<HubSpotDealObject>, HubSpotDealApi<HubSpotDealObject>>();
+            services.TryAddSingleton<IHubSpotObjectApi<HubSpotTicketObject>, HubSpotTicketApi<HubSpotTicketObject>>();
         }
 
         public static void RegisterHubSpotObjectApi<T, TImpl>(this IServiceCollection services)
