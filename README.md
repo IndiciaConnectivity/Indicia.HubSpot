@@ -31,6 +31,10 @@ The Indicia.HubSpot client still needs a lot of work. Things that immediately po
 - Support for the non-object API types (Properties, Pipelines, Engagements, ...)
 - Tests
 - Examples
+- Support for non-string property types for the object models
+- Support for auto-discovery of objectapi's using assembly scanning
+- AsyncEnumerable support
+- Add description xmldoc to object properties
 
 
 ## Getting started
