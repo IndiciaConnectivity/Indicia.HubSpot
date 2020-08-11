@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using Indicia.HubSpot.Core;
 
 namespace Indicia.HubSpot.Api.Tickets
@@ -28,28 +29,28 @@ namespace Indicia.HubSpot.Api.Tickets
         public string TicketStatus { get; set; }
         
         /// <summary>
-        /// The date the ticket was created
-        /// </summary>
-        [DataMember(Name = "createdate")]
-        public string CreateDate { get; set; }
-        
-        /// <summary>
         /// The last time a note, call, email, meeting, or task was logged for a ticket. This is updated automatically by HubSpot.
         /// </summary>
         [DataMember(Name = "hs_lastactivitydate")]
-        public string LastActivityDate { get; set; }
+        public DateTime? LastActivityDate { get; set; }
+        
+        /// <summary>
+        /// The date the ticket was created
+        /// </summary>
+        [DataMember(Name = "createdate")]
+        public DateTime CreateDate { get; set; }
         
         /// <summary>
         /// Most recent timestamp of any property update for this ticket. This includes HubSpot internal properties, which can be visible or hidden. This property is updated automatically.
         /// </summary>
         [DataMember(Name = "hs_lastmodifieddate")]
-        public string LastModifiedDate { get; set; }
+        public DateTime LastModifiedDate { get; set; }
         
         /// <summary>
         /// The date the ticket was closed
         /// </summary>
         [DataMember(Name = "closed_date")]
-        public string CloseDate { get; set; }
+        public DateTime? CloseDate { get; set; }
         
         /// <summary>
         /// Short summary of ticket

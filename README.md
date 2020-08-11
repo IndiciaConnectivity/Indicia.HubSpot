@@ -1,4 +1,4 @@
-﻿# Indicia.HubSpot
+# Indicia.HubSpot
 
 [![NuGet](https://img.shields.io/nuget/v/Indicia.HubSpot.svg)](https://www.nuget.org/packages/Indicia.HubSpot/)
 ![publish nuget](https://github.com/IndiciaConnectivity/Indicia.HubSpot/workflows/publish%20nuget/badge.svg)
@@ -19,15 +19,16 @@ Currently, the only APIs which are supported are:
 - Company
 - Contact
 - Deal
+- Ticket
 
-However, this could very easily be extended with the other object API's (Line Item, Product, Ticket, Quote).
+However, this could very easily be extended with the other object API's (Line Item, Product, Quote).
 
 ## TO DO
 
 The Indicia.HubSpot client still needs a lot of work. Things that immediately pop into mind:
 
 - OAuth support
-- Support for the other object API types (Line Item, Product, Ticket, Quote)
+- Support for the other object API types (Line Item, Product, Quote)
 - Support for the non-object API types (Properties, Pipelines, Engagements, ...)
 - Tests
 - Examples
