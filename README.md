@@ -19,18 +19,18 @@ Currently, the only APIs which are supported are:
 - Company
 - Contact
 - Deal
+- Ticket
 
-However, this could very easily be extended with the other object API's (Line Item, Product, Ticket, Quote).
+However, this could very easily be extended with the other object API's (Line Item, Product, Quote).
 
 ## TO DO
 
 The Indicia.HubSpot client still needs a lot of work. Things that immediately pop into mind:
 
 - OAuth support
-- Support for the other object API types (Line Item, Product, Ticket, Quote)
+- Support for the other object API types (Line Item, Product, Quote)
 - Support for the non-object API types (Properties, Pipelines, Engagements, ...)
 - Tests
-- Examples
 - Support for non-string property types for the object models
 - Support for auto-discovery of objectapi's using assembly scanning
 - AsyncEnumerable support
