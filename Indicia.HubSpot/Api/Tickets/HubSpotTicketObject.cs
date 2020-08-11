@@ -34,6 +34,36 @@ namespace Indicia.HubSpot.Api.Tickets
         public string CreateDate { get; set; }
         
         /// <summary>
+        /// The last time a note, call, email, meeting, or task was logged for a ticket. This is updated automatically by HubSpot.
+        /// </summary>
+        [DataMember(Name = "hs_lastactivitydate")]
+        public string LastActivityDate { get; set; }
+        
+        /// <summary>
+        /// Most recent timestamp of any property update for this ticket. This includes HubSpot internal properties, which can be visible or hidden. This property is updated automatically.
+        /// </summary>
+        [DataMember(Name = "hs_lastmodifieddate")]
+        public string LastModifiedDate { get; set; }
+        
+        /// <summary>
+        /// The date the ticket was closed
+        /// </summary>
+        [DataMember(Name = "closed_date")]
+        public string CloseDate { get; set; }
+        
+        /// <summary>
+        /// Short summary of ticket
+        /// </summary>
+        [DataMember(Name = "subject")]
+        public string TicketName { get; set; }
+        
+        /// <summary>
+        /// Description of the ticket
+        /// </summary>
+        [DataMember(Name = "content")]
+        public string Content { get; set; }
+        
+        /// <summary>
         /// The level of attention needed on the ticket
         /// </summary>
         [DataMember(Name = "hs_ticket_priority")]
