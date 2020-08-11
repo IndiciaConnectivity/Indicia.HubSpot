@@ -1,4 +1,4 @@
-# Indicia.HubSpot
+﻿# Indicia.HubSpot
 
 [![NuGet](https://img.shields.io/nuget/v/Indicia.HubSpot.svg)](https://www.nuget.org/packages/Indicia.HubSpot/)
 ![publish nuget](https://github.com/IndiciaConnectivity/Indicia.HubSpot/workflows/publish%20nuget/badge.svg)
@@ -31,7 +31,6 @@ The Indicia.HubSpot client still needs a lot of work. Things that immediately po
 - Support for the other object API types (Line Item, Product, Quote)
 - Support for the non-object API types (Properties, Pipelines, Engagements, ...)
 - Tests
-- Examples
 - Support for non-string property types for the object models
 - Support for auto-discovery of objectapi's using assembly scanning
 - AsyncEnumerable support
