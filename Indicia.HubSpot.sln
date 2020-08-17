@@ -5,6 +5,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{42C8F7BC-6AD2-4711-ABA3-BE5F52E56B8B}"
 ProjectSection(SolutionItems) = preProject
 	README.md = README.md
+	LICENSE = LICENSE
 EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Indicia.HubSpot.Example", "Indicia.HubSpot.Example\Indicia.HubSpot.Example.csproj", "{C2BEB9FE-1D2B-4DC0-AC9F-B195523CA841}"

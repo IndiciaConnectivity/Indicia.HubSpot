@@ -99,4 +99,8 @@ public class HubSpotTestCommand
 }
 ```
 
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/IndiciaConnectivity/Indicia.HubSpot/blob/master/LICENSE) file for details.
+
 
