@@ -8,6 +8,7 @@
         <Company>Indicia</Company>
         <Description>C# .NET Wrapper around the common HubSpot v3 APIs.</Description>
         <PackageProjectUrl>https://github.com/IndiciaConnectivity/Indicia.HubSpot/</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/IndiciaConnectivity/Indicia.HubSpot/blob/master/LICENSE</PackageLicenseUrl>
         <PackageTags>hubspot v3 api</PackageTags>
     </PropertyGroup>
 
