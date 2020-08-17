@@ -99,6 +99,18 @@ public class HubSpotTestCommand
 }
 ```
 
+
+## Contributing
+
+Please read [CONTRIBUTING.md](https://github.com/IndiciaConnectivity/Indicia.HubSpot/blob/master/CONTRIBUTING.md) for more information on how to contribute. PRs welcome!
+
+
+## Authors
+
+- Jesse Klaasse
+- Lesley Vente
+
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/IndiciaConnectivity/Indicia.HubSpot/blob/master/LICENSE) file for details.
