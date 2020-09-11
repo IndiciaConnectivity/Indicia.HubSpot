@@ -68,6 +68,18 @@ namespace Indicia.HubSpot.Api.Tickets
         /// </summary>
         [DataMember(Name = "hs_ticket_priority")]
         public string Priority { get; set; }
+        
+        /// <summary>
+        /// Channel where ticket was originally submitted
+        /// </summary>
+        [DataMember(Name = "source_type")]
+        public string Source { get; set; }
+        
+        /// <summary>
+        /// The user IDs of all owners of this object
+        /// </summary>
+        [DataMember(Name = "hs_user_ids_of_all_owners")]
+        public string UserIdsOfAllOwners { get; set; }
 
         [IgnoreDataMember] public string ObjectType => "ticket";
     }
