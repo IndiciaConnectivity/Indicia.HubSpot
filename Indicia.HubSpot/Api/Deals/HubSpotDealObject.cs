@@ -25,7 +25,7 @@ namespace Indicia.HubSpot.Api.Deals
         public string CloseDate { get; set; }
 
         [DataMember(Name = "amount")]
-        public double? Amount { get; set; }
+        public decimal? Amount { get; set; }
 
         [DataMember(Name = "dealtype")]
         public string DealType { get; set; }
