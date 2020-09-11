@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.Serialization;
 
@@ -35,13 +36,23 @@ namespace Indicia.HubSpot.Core.Crud.Dto
 
                 if (memberAttrib == null || prop.SetMethod == null || !Properties.ContainsKey(memberAttrib.Name))
                     continue;
-                
-                prop.SetValue(result, Properties[memberAttrib.Name]);
+
+                var propValue = Deserialize(Properties[memberAttrib.Name], prop.PropertyType);
+                prop.SetValue(result, propValue);
             }
 
             result.Id = Id;
 
             return result;
+        }
+
+        private static object Deserialize(object inputObj, Type propertyType)
+        {
+            if (!(inputObj is string valueAsString) || string.IsNullOrEmpty(valueAsString))
+                return null;
+
+            var conv = TypeDescriptor.GetConverter(propertyType);
+            return conv.ConvertFromInvariantString(valueAsString);
         }
     }
 }
