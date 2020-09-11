@@ -30,6 +30,7 @@ namespace Indicia.HubSpot.Example
             services.AddLogging(builder =>
             {
                 builder.AddConsole();
+                builder.SetMinimumLevel(LogLevel.Debug);
             });
 
             // build config
@@ -40,7 +41,10 @@ namespace Indicia.HubSpot.Example
 
             // add services
             services.AddHubSpot(options =>
-                options.Auth = new HubSpotApiKeyClientAuth(configuration["HUBSPOT_API_KEY"]));
+            {
+                options.Auth = new HubSpotApiKeyClientAuth(configuration["HUBSPOT_API_KEY"]);
+                options.UseHttpLogging = true;
+            });
             
             // register custom object implementation
             services.RegisterHubSpotObjectApi<HubSpotContact, HubSpotContactApi<HubSpotContact>>();
