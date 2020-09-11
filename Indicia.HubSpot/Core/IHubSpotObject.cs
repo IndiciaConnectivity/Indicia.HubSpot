@@ -7,6 +7,9 @@
         /// </summary>
         string ObjectType { get; }
         
+        /// <summary>
+        /// The HubSpot object identifier
+        /// </summary>
         string Id { get; set; }
     }
 }
