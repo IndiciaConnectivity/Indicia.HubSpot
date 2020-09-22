@@ -99,4 +99,16 @@ public class HubSpotTestCommand
 }
 ```
 
+### Use your own _IRestClient_
+
+It is possible to register your own `IRestClient` implementation instead of the default one from RestSharp. For example, this allows extending
+the `RestClient` class with retry policies using Polly. Just register your own implementation before calling `services.AddHubSpot(...)`:
+
+```csharp
+services.AddSingleton<IRestClient, MyAwesomeRestClient>();
+services.AddHubSpot(options =>
+{
+    options.Auth = new HubSpotApiKeyClientAuth("YOUR-API-KEY");
+});
+```
 
