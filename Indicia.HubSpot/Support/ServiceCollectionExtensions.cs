@@ -7,6 +7,7 @@ using Indicia.HubSpot.Api.Tickets;
 using Indicia.HubSpot.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using RestSharp;
 
 namespace Indicia.HubSpot.Support
 {
@@ -19,6 +20,7 @@ namespace Indicia.HubSpot.Support
                 services.Configure(hubSpotOptionsAction);
             }
 
+            services.TryAddSingleton<IRestClient, RestClient>();
             services.TryAddSingleton<IHubSpotApi, HubSpotApi>();
             services.TryAddSingleton<IHubSpotClient, HubSpotClient>();
 
