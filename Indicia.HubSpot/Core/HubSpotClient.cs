@@ -16,7 +16,7 @@ namespace Indicia.HubSpot.Core
     internal class HubSpotClient : IHubSpotClient
     {
         private readonly IOptions<HubSpotOptions> _options;
-        private readonly RestClient _client;
+        private readonly IRestClient _client;
         private readonly ILogger _logger;
 
         private static string BaseUrl => "https://api.hubapi.com";
@@ -28,7 +28,10 @@ namespace Indicia.HubSpot.Core
         public HubSpotClient(IOptions<HubSpotOptions> options, IServiceProvider serviceProvider)
         {
             _options = options;
-            _client = new RestClient(BaseUrl);
+
+            _client = serviceProvider.GetRequiredService<IRestClient>();
+            _client.BaseUrl = new Uri(BaseUrl);
+
             _logger = _options.Value.UseHttpLogging ? serviceProvider.GetService<ILogger>() : null;
 
             if (_options.Value.Auth == null)
