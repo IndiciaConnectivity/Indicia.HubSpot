@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Indicia.HubSpot.Api;
@@ -47,6 +48,11 @@ namespace Indicia.HubSpot.Example
                 Limit = 10
             }, cancellationToken);
             LogResult("Contacts: {contacts}", contacts);
+            
+            // Contact association examples
+            var contactAssociations = await _hubSpotApi.GetObjectApi<HubSpotContact>()
+                .ListAssociationsAsync<HubSpotCompanyObject>(contacts.Results.First(), cancellationToken);
+            LogResult("First contact's company associations: {contactAssociations}", contactAssociations);
             
             // Deal examples
             var deals = await _hubSpotApi.GetDealApi().ListAsync(new ListParameters
