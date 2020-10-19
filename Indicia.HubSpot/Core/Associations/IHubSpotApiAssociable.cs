@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Indicia.HubSpot.Core.Crud.Dto;
 
 namespace Indicia.HubSpot.Core.Associations
 {
@@ -11,7 +12,7 @@ namespace Indicia.HubSpot.Core.Associations
         
         Task UnassociateAsync(IHubSpotObject fromObject, IHubSpotObject toObject, CancellationToken cancellationToken = default);
 
-        Task<IEnumerable<TTo>> ListAssociationsAsync<TTo>(IHubSpotObject fromObject, CancellationToken cancellationToken = default)
+        Task<ListResult<TTo>> ListAssociationsAsync<TTo>(IHubSpotObject fromObject, CancellationToken cancellationToken = default)
             where TTo : IHubSpotObject, new();
     }
 }
