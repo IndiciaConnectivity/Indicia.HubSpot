@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using Indicia.HubSpot.Core.Crud.Dto;
 using RestSharp;
 
 namespace Indicia.HubSpot.Core
@@ -20,11 +20,11 @@ namespace Indicia.HubSpot.Core
             return _client.ExecuteOnlyAsync(path, Method.DELETE, cancellationToken);
         }
 
-        public async Task<IEnumerable<TTo>> ListAssociationsAsync<TTo>(IHubSpotObject fromObject, CancellationToken cancellationToken = default)
+        public async Task<ListResult<TTo>> ListAssociationsAsync<TTo>(IHubSpotObject fromObject, CancellationToken cancellationToken = default)
             where TTo : IHubSpotObject, new()
         {
             var path = GetAssociationRoute<T, TTo>(fromObject);
-            var result = await _client.ExecuteAsync<List<TTo>>(path, Method.GET, cancellationToken);
+            var result = await _client.ExecuteAsync<ListResult<TTo>>(path, Method.GET, cancellationToken);
             return result;
         }
     }
