@@ -48,6 +48,9 @@ namespace Indicia.HubSpot.Example
                 Limit = 10
             }, cancellationToken);
             LogResult("Contacts: {contacts}", contacts);
+
+            var contact = await _hubSpotApi.GetObjectApi<HubSpotContact>()
+                .ReadAsync("#urlencode-test", new ReadParameters { IdProperty = "email", NotFoundReturnsNull = true }, cancellationToken); // This should not lead to a 401 but to a 404, so to null
             
             // Contact association examples
             var contactAssociations = await _hubSpotApi.GetObjectApi<HubSpotContact>()

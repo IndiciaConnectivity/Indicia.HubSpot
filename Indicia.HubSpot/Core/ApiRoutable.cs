@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 
 namespace Indicia.HubSpot.Core
 {
@@ -45,7 +46,7 @@ namespace Indicia.HubSpot.Core
         public virtual string GetRoute(params string[] orderedRouteValues)
         {
             var orderValuesFiltered = FilterRouteValues(orderedRouteValues);
-            var combinedParams = string.Join("/", orderValuesFiltered);
+            var combinedParams = string.Join("/", orderValuesFiltered.Select(HttpUtility.UrlEncode));
             return $"{GetRoute()}/{combinedParams}";
         }
 
@@ -59,7 +60,7 @@ namespace Indicia.HubSpot.Core
             where T : IHubSpotObject
         {
             var orderValuesFiltered = FilterRouteValues(orderedRouteValues);
-            var combinedParams = string.Join("/", orderValuesFiltered);
+            var combinedParams = string.Join("/", orderValuesFiltered.Select(HttpUtility.UrlEncode));
             return $"{GetRoute<T>().TrimEnd('/')}/{combinedParams}";
         }
 
