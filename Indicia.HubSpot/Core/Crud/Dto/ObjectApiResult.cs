@@ -48,10 +48,16 @@ namespace Indicia.HubSpot.Core.Crud.Dto
 
         private static object Deserialize(object inputObj, Type propertyType)
         {
+            var conv = TypeDescriptor.GetConverter(propertyType);
+
+            if (inputObj != null && propertyType == inputObj.GetType())
+            {
+                return inputObj;
+            }
+            
             if (!(inputObj is string valueAsString) || string.IsNullOrEmpty(valueAsString))
                 return null;
 
-            var conv = TypeDescriptor.GetConverter(propertyType);
             return conv.ConvertFromInvariantString(valueAsString);
         }
     }
