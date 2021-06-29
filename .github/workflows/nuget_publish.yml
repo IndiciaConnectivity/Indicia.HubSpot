@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-dotnet@v1
-      - uses: olegtarasov/get-tag@v2
+      - uses: olegtarasov/get-tag@v2.1
         name: Set tag environment variable
       - name: pack Indicia.HubSpot
         run: dotnet pack Indicia.HubSpot/Indicia.HubSpot.csproj --configuration Release -p:PackageVersion=${GIT_TAG_NAME}
