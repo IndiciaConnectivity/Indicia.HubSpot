@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using Indicia.HubSpot.Api.Contacts;
 using Indicia.HubSpot.Core.Auth;
 using Indicia.HubSpot.Support;
@@ -40,6 +41,7 @@ namespace Indicia.HubSpot.Example
                 .Build();
 
             // add services
+            //services.AddTransient<IHubSpotClientAuthFactory, SomeHubSpotClientAuthFactory>();
             services.AddHubSpot(options =>
             {
                 options.Auth = new HubSpotApiKeyClientAuth(configuration["HUBSPOT_API_KEY"]);

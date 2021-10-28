@@ -25,5 +25,5 @@ namespace Indicia.HubSpot.Core.Auth
         {
             return url?.Replace(_apiKey, "****");
         }
-    }
+    } 
 }
