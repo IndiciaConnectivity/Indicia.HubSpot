@@ -51,8 +51,33 @@ services.AddHubSpot(options =>
     options.UseHttpLogging = true; // Enabling this logs the HubSpot API requests and responses using Microsoft's ILogger
 });
 ```
-
 This allows you to inject the main entry points of this library, with `IHubSpotApi` as the most important one.
+
+As an alternative for specifying the `Auth` using the `options`, you could also create and register your own
+`IHubSpotClientAuthFactory`, which will take precedence when registered. Like this:
+
+```csharp
+// add services
+services.AddTransient<IHubSpotClientAuthFactory, SomeHubSpotClientAuthFactory>();
+services.AddHubSpot(options =>
+{
+    options.UseHttpLogging = true;
+});
+```
+
+Together with something like this:
+
+```csharp
+public class SomeHubSpotClientAuthFactory : IHubSpotClientAuthFactory
+{
+    public Task<IHubSpotClientAuth> CreateAsync(CancellationToken cancellationToken = default)
+    {
+        var auth = new HubSpotApiKeyClientAuth("my API KEY");
+        return Task.FromResult((IHubSpotClientAuth)auth);
+    }
+}
+```
+
 
 ### Using your own models
 

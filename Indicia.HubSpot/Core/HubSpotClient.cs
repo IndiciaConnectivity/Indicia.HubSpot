@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Indicia.HubSpot.Core.Auth;
 using Indicia.HubSpot.Core.Serializers;
 using Indicia.HubSpot.Support;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +19,7 @@ namespace Indicia.HubSpot.Core
         private readonly IOptions<HubSpotOptions> _options;
         private readonly IRestClient _client;
         private readonly ILogger _logger;
+        private readonly IServiceProvider _serviceProvider;
 
         private static string BaseUrl => "https://api.hubapi.com";
         private static string BasePath => BaseUrl;
@@ -28,16 +30,12 @@ namespace Indicia.HubSpot.Core
         public HubSpotClient(IOptions<HubSpotOptions> options, IServiceProvider serviceProvider)
         {
             _options = options;
+            _serviceProvider = serviceProvider;
 
-            _client = serviceProvider.GetRequiredService<IRestClient>();
+            _client = _serviceProvider.GetRequiredService<IRestClient>();
             _client.BaseUrl = new Uri(BaseUrl);
 
             _logger = _options.Value.UseHttpLogging ? serviceProvider.GetService<ILogger>() : null;
-
-            if (_options.Value.Auth == null)
-            {
-                throw new NotSupportedException($"The '{nameof(_options.Value.Auth)}' option is required.");
-            }
         }
 
         public Task<TResponse> ExecuteAsync<TResponse>(string path, Method method = Method.GET,
@@ -79,10 +77,9 @@ namespace Indicia.HubSpot.Core
         {
             var request = await ConfigureRequestAuthenticationAsync(path, method, cancellationToken);
             request.AddQueryParameters(queryParameters);
-            request.OnBeforeRequest += OnBeforeRequest(request);
 
             var response = await _client.ExecuteAsync<TResponse>(request, cancellationToken);
-            LogResponse(response);
+            await LogResponseAsync(response, cancellationToken);
 
             if (response.IsSuccessful == false)
             {
@@ -118,7 +115,6 @@ namespace Indicia.HubSpot.Core
         {
             var request = await ConfigureRequestAuthenticationAsync(path, method, cancellationToken);
             request.AddQueryParameters(queryParameters);
-            request.OnBeforeRequest += OnBeforeRequest(request);
 
             if (entity != null)
             {
@@ -126,7 +122,7 @@ namespace Indicia.HubSpot.Core
             }
 
             var response = await _client.ExecuteAsync<TResponse>(request, cancellationToken);
-            LogResponse(response);
+            await LogResponseAsync(response, cancellationToken);
 
             if (response.IsSuccessful == false)
             {
@@ -157,7 +153,6 @@ namespace Indicia.HubSpot.Core
         {
             var request = await ConfigureRequestAuthenticationAsync(path, method, cancellationToken);
             request.AddQueryParameters(queryParameters);
-            request.OnBeforeRequest += OnBeforeRequest(request);
 
             if (entity != null)
             {
@@ -165,7 +160,7 @@ namespace Indicia.HubSpot.Core
             }
 
             var response = await _client.ExecuteAsync(request, cancellationToken);
-            LogResponse(response);
+            await LogResponseAsync(response, cancellationToken);
 
             if (!response.IsSuccessful)
                 throw new HubSpotException("Error from HubSpot",
@@ -184,10 +179,9 @@ namespace Indicia.HubSpot.Core
         {
             var request = await ConfigureRequestAuthenticationAsync(path, method, cancellationToken);
             request.AddQueryParameters(queryParameters);
-            request.OnBeforeRequest += OnBeforeRequest(request);
 
             var response = await _client.ExecuteAsync(request, cancellationToken);
-            LogResponse(response);
+            await LogResponseAsync(response, cancellationToken);
 
             if (!response.IsSuccessful)
                 throw new HubSpotException("Error from HubSpot",
@@ -206,27 +200,45 @@ namespace Indicia.HubSpot.Core
         {
             var fullPath = $"{BasePath.TrimEnd('/')}/{path.Trim('/')}";
             var request = new RestRequest(fullPath, method, DataFormat.Json);
-            await _options.Value.Auth.ConfigureAuthAsync(request, cancellationToken);
+            var auth = await GetAuthAsync(cancellationToken);
+            await auth.ConfigureAuthAsync(request, cancellationToken);
             request.JsonSerializer = new NewtonsoftRestSharpSerializer();
+            
+            request.OnBeforeRequest += http =>
+            {
+                var body = http.RequestBody;
+                _logger?.LogTrace("HubSpot {Method} request to {Resource}{Body}",
+                    request.Method, auth.AnonymizeUrl(http.Url.ToString()),
+                    string.IsNullOrEmpty(body) ? string.Empty : $": {body}");
+            };
+            
             return request;
         }
 
-        private Action<IHttp> OnBeforeRequest(IRestRequest request)
+        private async Task LogResponseAsync(IRestResponse response, CancellationToken cancellationToken)
         {
-            return http =>
-            {
-                var body = http.RequestBody;
-                _logger?.LogTrace("HubSpot {method} request to {resource}{body}",
-                    request.Method, _options.Value.Auth.AnonymizeUrl(http.Url.ToString()),
-                    string.IsNullOrEmpty(body) ? string.Empty : $": {body}");
-            };
+            var auth = await GetAuthAsync(cancellationToken);
+
+            _logger?.LogDebug("HubSpot {Method} request to {Resource} resulted in {StatusCode} {StatusResponse}",
+                response.Request.Method, auth.AnonymizeUrl(response.ResponseUri.ToString()),
+                (int) response.StatusCode, response.StatusDescription);
         }
 
-        private void LogResponse(IRestResponse response)
+        private async Task<IHubSpotClientAuth> GetAuthAsync(CancellationToken cancellationToken = default)
         {
-            _logger?.LogDebug("HubSpot {method} request to {resource} resulted in {statusCode} {statusResponse}",
-                response.Request.Method, _options.Value.Auth.AnonymizeUrl(response.ResponseUri.ToString()),
-                (int) response.StatusCode, response.StatusDescription);
+            var factory = _serviceProvider.GetService<IHubSpotClientAuthFactory>();
+
+            var auth = factory == null
+                ? _options.Value.Auth
+                : await factory.CreateAsync(cancellationToken);
+
+            if (auth == null)
+            {
+                throw new NotSupportedException(
+                    $"The '{nameof(_options.Value.Auth)}' option or injecting an instance of '{nameof(IHubSpotClientAuthFactory)}' is required.");
+            }
+
+            return auth;
         }
     }
 }
